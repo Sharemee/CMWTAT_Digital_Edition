@@ -189,9 +189,6 @@
     <None Include="Res\slmgr.vbs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Debug\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Res\gatherosstateltsc.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
