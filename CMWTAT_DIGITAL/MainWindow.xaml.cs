@@ -157,26 +157,26 @@ namespace CMWTAT_DIGITAL
             ConsoleLog("创建缓存完毕");
 
             byte[] temp;
-            System.IO.FileStream fileStream;
+            FileStream fileStream;
 
-            temp = CMWTAT_DIGITAL.Properties.Resources.gatherosstate;
-            fileStream = new System.IO.FileStream(tempfile + "gatherosstate" + ".exe", System.IO.FileMode.CreateNew);
-            fileStream.Write(temp, 0, (int)(temp.Length));
+            temp = Properties.Resources.gatherosstate;
+            fileStream = new FileStream(tempfile + "gatherosstate" + ".exe", FileMode.CreateNew);
+            fileStream.Write(temp, 0, temp.Length);
             fileStream.Close();
 
-            temp = CMWTAT_DIGITAL.Properties.Resources.gatherosstateltsc;
-            fileStream = new System.IO.FileStream(tempfile + "gatherosstateltsc" + ".exe", System.IO.FileMode.CreateNew);
-            fileStream.Write(temp, 0, (int)(temp.Length));
+            temp = Properties.Resources.gatherosstateltsc;
+            fileStream = new FileStream(tempfile + "gatherosstateltsc" + ".exe", FileMode.CreateNew);
+            fileStream.Write(temp, 0, temp.Length);
             fileStream.Close();
 
-            temp = CMWTAT_DIGITAL.Properties.Resources.slc;
-            fileStream = new System.IO.FileStream(tempfile + "slc" + ".dll", System.IO.FileMode.CreateNew);
-            fileStream.Write(temp, 0, (int)(temp.Length));
+            temp = Properties.Resources.slc;
+            fileStream = new FileStream(tempfile + "slc" + ".dll", FileMode.CreateNew);
+            fileStream.Write(temp, 0, temp.Length);
             fileStream.Close();
 
-            temp = CMWTAT_DIGITAL.Properties.Resources.slmgr;
-            fileStream = new System.IO.FileStream(tempfile + "slmgr" + ".vbs", System.IO.FileMode.CreateNew);
-            fileStream.Write(temp, 0, (int)(temp.Length));
+            temp = Properties.Resources.slmgr;
+            fileStream = new FileStream(tempfile + "slmgr" + ".vbs", FileMode.CreateNew);
+            fileStream.Write(temp, 0, temp.Length);
             fileStream.Close();
         }
 
@@ -243,10 +243,10 @@ namespace CMWTAT_DIGITAL
 
             // 获取程序集元数据 
             AssemblyCopyrightAttribute copyright = (AssemblyCopyrightAttribute)
-            AssemblyCopyrightAttribute.GetCustomAttribute(Assembly.GetExecutingAssembly(),
+            Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(),
             typeof(AssemblyCopyrightAttribute));
             AssemblyDescriptionAttribute description = (AssemblyDescriptionAttribute)
-            AssemblyDescriptionAttribute.GetCustomAttribute(System.Reflection.Assembly.GetExecutingAssembly(),
+            Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(),
             typeof(AssemblyDescriptionAttribute));
 
             ProductVersion = System.Windows.Forms.Application.ProductVersion;
@@ -332,9 +332,9 @@ namespace CMWTAT_DIGITAL
                 DialogHelp.IsOpen = true;
             }
 
-            notifyIcon = new System.Windows.Forms.NotifyIcon(); // 先初始化托盘图标，以方便语言缺省时提示
+            notifyIcon = new NotifyIcon(); // 先初始化托盘图标，以方便语言缺省时提示
             notifyIcon.Text = (string)this.Resources["notifyIconTitle"]; //托盘图标标题
-            notifyIcon.Icon = ((System.Drawing.Icon)(CMWTAT_DIGITAL.Properties.Resources.CMWTAT_ICON));
+            notifyIcon.Icon = Properties.Resources.CMWTAT_ICON;
 
             if ((Program.hiderun == true && Program.autoact == true) || NotSupportLang == true)
             {
@@ -708,7 +708,7 @@ namespace CMWTAT_DIGITAL
                     string strHTML = null;
                     result = (HttpWebResponse)myReq.GetResponse();
                     Stream receviceStream = result.GetResponseStream();
-                    StreamReader readerOfStream = new StreamReader(receviceStream, System.Text.Encoding.GetEncoding("utf-8"));
+                    StreamReader readerOfStream = new StreamReader(receviceStream, Encoding.GetEncoding("utf-8"));
                     strHTML = readerOfStream.ReadToEnd();
                     readerOfStream.Close();
                     receviceStream.Close();
@@ -764,7 +764,7 @@ namespace CMWTAT_DIGITAL
                 string targetFile = slmgr_self;
                 bool isrewrite = true; // true=覆盖已存在的同名文件,false则反之
                 ConsoleLog("Copy Start: " + sourceFile + " To " + targetFile);
-                System.IO.File.Copy(sourceFile, targetFile, isrewrite);
+                File.Copy(sourceFile, targetFile, isrewrite);
                 ConsoleLog("Copy Completed.");
             }
             catch (Exception CopyExc)
@@ -942,7 +942,7 @@ namespace CMWTAT_DIGITAL
                 string targetFile = slmgr_self;
                 bool isrewrite = true; // true=覆盖已存在的同名文件,false则反之
                 ConsoleLog("Copy Start: " + sourceFile + " To " + targetFile);
-                System.IO.File.Copy(sourceFile, targetFile, isrewrite);
+                File.Copy(sourceFile, targetFile, isrewrite);
                 ConsoleLog("Copy Completed.");
             }
             catch (Exception CopyExc)
@@ -1320,7 +1320,7 @@ namespace CMWTAT_DIGITAL
             Wow64EnableWow64FsRedirection(false);//关闭文件重定向
             System.Diagnostics.Process p = new System.Diagnostics.Process();
             p.StartInfo.FileName = "cmd.exe";//要执行的程序名称 
-            p.StartInfo.WorkingDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
+            p.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.RedirectStandardInput = true;//可能接受来自调用程序的输入信息 
             p.StartInfo.RedirectStandardOutput = true;//由调用程序获取输出信息 
@@ -1356,7 +1356,7 @@ namespace CMWTAT_DIGITAL
                 //myProcess.StartInfo.StandardOutputEncoding = Encoding.UTF8;
                 myProcess.Start();
                 myProcess.WaitForExit(60 * 1000);
-                System.IO.StreamReader myStreamReader = myProcess.StandardOutput;
+                StreamReader myStreamReader = myProcess.StandardOutput;
                 string myString = myStreamReader.ReadToEnd();
                 myProcess.Close();
                 ConsoleLog(myString.Trim());
@@ -1388,7 +1388,7 @@ namespace CMWTAT_DIGITAL
                 //myProcess.StartInfo.StandardOutputEncoding = Encoding.UTF8;
                 myProcess.Start();
                 myProcess.WaitForExit(60 * 1000);
-                System.IO.StreamReader myStreamReader = myProcess.StandardOutput;
+                StreamReader myStreamReader = myProcess.StandardOutput;
                 string myString = myStreamReader.ReadToEnd();
                 myProcess.Close();
                 ConsoleLog(myString.Trim());
@@ -1418,7 +1418,7 @@ namespace CMWTAT_DIGITAL
                 myProcess.StartInfo = ProcessStartInfo;
                 myProcess.Start();
                 myProcess.WaitForExit(60 * 1000);
-                System.IO.StreamReader myStreamReader = myProcess.StandardOutput;
+                StreamReader myStreamReader = myProcess.StandardOutput;
                 string myString = myStreamReader.ReadToEnd();
                 myProcess.Close();
                 ConsoleLog(myString.Trim());
@@ -1448,7 +1448,7 @@ namespace CMWTAT_DIGITAL
                 myProcess.StartInfo.StandardOutputEncoding = Encoding.UTF8;
                 myProcess.Start();
                 myProcess.WaitForExit(60 * 1000);
-                System.IO.StreamReader myStreamReader = myProcess.StandardOutput;
+                StreamReader myStreamReader = myProcess.StandardOutput;
                 string myString = myStreamReader.ReadToEnd();
                 myProcess.Close();
                 myString = Regex.Replace(myString, @"[^0-9]+", "");
@@ -1496,7 +1496,7 @@ namespace CMWTAT_DIGITAL
                 string pattern = @"^[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}-[a-zA-Z0-9]{5}$";
                 if (is_auto == false)
                 {
-                    if (CMWTAT_DIGITAL.Domain.IsSN.IsMatch((SystemEditionTextInput.Text ?? "").ToString(), pattern))
+                    if (IsSN.IsMatch((SystemEditionTextInput.Text ?? "").ToString(), pattern))
                     {
                         actbtn.IsEnabled = true;
                         installbtn.IsEnabled = true;

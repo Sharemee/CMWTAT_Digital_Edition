@@ -31,20 +31,14 @@ namespace CMWTAT_DIGITAL
             //AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             //{
             //    String resourceName = "CMWTAT_DIGITAL.Res." +
-
             //    new AssemblyName(args.Name).Name + ".dll";
-
             //    Console.WriteLine("Load Assembly: " + resourceName);
-
             //    using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
             //    {
             //        if (stream == null)
             //            return null;
-
             //        Byte[] assemblyData = new Byte[stream.Length];
-
             //        stream.Read(assemblyData, 0, assemblyData.Length);
-
             //        return Assembly.Load(assemblyData);
             //    }
             //};
