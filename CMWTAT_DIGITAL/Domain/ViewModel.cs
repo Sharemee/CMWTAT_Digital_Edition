@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CMWTAT_DIGITAL.Domain
 {
-    class ViewModel : INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged
     {
         private string _sn;
 

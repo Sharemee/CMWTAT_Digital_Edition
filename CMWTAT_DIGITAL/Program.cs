@@ -22,28 +22,11 @@ namespace CMWTAT_DIGITAL
         [GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
         public static void Main(string[] startup_args)
         {
-            //添加程序集解析事件  
-            //AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
-            //{
-            //    String resourceName = "CMWTAT_DIGITAL.Res." + new AssemblyName(args.Name).Name + ".dll";
-            //    Console.WriteLine("Load Assembly: " + resourceName);
-
-            //    using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
-            //    {
-            //        if (stream == null)
-            //            return null;
-
-            //        Byte[] assemblyData = new Byte[stream.Length];
-
-            //        stream.Read(assemblyData, 0, assemblyData.Length);
-
-            //        return Assembly.Load(assemblyData);
-            //    }
-            //};
+            //添加程序集解析事件
             var loadedAssemblies = new Dictionary<string, Assembly>();
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
-                string resourceName = "CMWTAT_DIGITAL.Res." + new AssemblyName(args.Name).Name + ".dll";
+                string resourceName = $"CMWTAT_DIGITAL.Res.{new AssemblyName(args.Name).Name}.dll";
 
                 //Must return the EXACT same assembly, do not reload from a new stream
                 if (loadedAssemblies.TryGetValue(resourceName, out Assembly loadedAssembly))
@@ -58,9 +41,7 @@ namespace CMWTAT_DIGITAL
                         return null;
                     }
                     byte[] bytes = new byte[stream.Length];
-
                     stream.Read(bytes, 0, bytes.Length);
-
                     var assembly = Assembly.Load(bytes);
                     loadedAssemblies[resourceName] = assembly;
                     return assembly;
@@ -97,7 +78,7 @@ namespace CMWTAT_DIGITAL
                 }
             }
 
-            CMWTAT_DIGITAL.App app = new CMWTAT_DIGITAL.App();//WPF项目的Application实例，用来启动WPF项目的
+            App app = new App();//WPF项目的Application实例，用来启动WPF项目的
             app.InitializeComponent();
             app.Run();
         }
