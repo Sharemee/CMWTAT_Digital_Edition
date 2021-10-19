@@ -1,17 +1,13 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using System.Diagnostics;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace CMWTAT_DIGITAL
 {
     public static class Program
     {
-
         public static bool autoact = false;
         public static bool hiderun = false;
         public static bool expact = false;
@@ -21,19 +17,15 @@ namespace CMWTAT_DIGITAL
         /// <summary>
         /// Application Entry Point.
         /// </summary>
-        [System.STAThreadAttribute()]
-        [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")]
-
+        [STAThread()]
+        [DebuggerNonUserCode()]
+        [GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
         public static void Main(string[] startup_args)
         {
             //添加程序集解析事件  
             //AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             //{
-            //    String resourceName = "CMWTAT_DIGITAL.Res." +
-
-            //    new AssemblyName(args.Name).Name + ".dll";
-
+            //    String resourceName = "CMWTAT_DIGITAL.Res." + new AssemblyName(args.Name).Name + ".dll";
             //    Console.WriteLine("Load Assembly: " + resourceName);
 
             //    using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
@@ -51,8 +43,7 @@ namespace CMWTAT_DIGITAL
             var loadedAssemblies = new Dictionary<string, Assembly>();
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
-                String resourceName = "CMWTAT_DIGITAL.Res." +
-                new AssemblyName(args.Name).Name + ".dll";
+                string resourceName = "CMWTAT_DIGITAL.Res." + new AssemblyName(args.Name).Name + ".dll";
 
                 //Must return the EXACT same assembly, do not reload from a new stream
                 if (loadedAssemblies.TryGetValue(resourceName, out Assembly loadedAssembly))
@@ -63,12 +54,14 @@ namespace CMWTAT_DIGITAL
                 using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
                 {
                     if (stream == null)
+                    {
                         return null;
-                    Byte[] assemblyData = new Byte[stream.Length];
+                    }
+                    byte[] bytes = new byte[stream.Length];
 
-                    stream.Read(assemblyData, 0, assemblyData.Length);
+                    stream.Read(bytes, 0, bytes.Length);
 
-                    var assembly = Assembly.Load(assemblyData);
+                    var assembly = Assembly.Load(bytes);
                     loadedAssemblies[resourceName] = assembly;
                     return assembly;
                 }
