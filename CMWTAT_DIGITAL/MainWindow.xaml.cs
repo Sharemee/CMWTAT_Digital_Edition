@@ -64,7 +64,7 @@ namespace CMWTAT_DIGITAL
             sFileName = sFilePath + sFileName; //文件的绝对路径
             if (!Directory.Exists(sFilePath))//验证路径是否存在
             {
-                Directory.CreateDirectory(sFilePath);
+                _ = Directory.CreateDirectory(sFilePath);
                 //不存在则创建
             }
             FileStream fs;
@@ -900,7 +900,7 @@ namespace CMWTAT_DIGITAL
         {
             actbtn.Dispatcher.Invoke(new Action(() =>
             {
-                if (Program.hiderun == true && Program.autoact == true)
+                if (Program.hiderun && Program.autoact)
                 {
                     int tipShowMilliseconds = 0;
                     string tipTitle = (string)this.Resources["notifyIconTitle"];
