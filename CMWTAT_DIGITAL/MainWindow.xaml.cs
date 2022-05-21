@@ -238,11 +238,8 @@ namespace CMWTAT_DIGITAL
 
             // 获取程序集元数据 
             AssemblyCopyrightAttribute copyright = (AssemblyCopyrightAttribute)
-            Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(),
-            typeof(AssemblyCopyrightAttribute));
-            AssemblyDescriptionAttribute description = (AssemblyDescriptionAttribute)
-            Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(),
-            typeof(AssemblyDescriptionAttribute));
+            Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute));
+            var description = (AssemblyDescriptionAttribute)  Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyDescriptionAttribute));
 
             ProductVersion = System.Windows.Forms.Application.ProductVersion;
 
