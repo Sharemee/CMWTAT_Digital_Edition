@@ -10,18 +10,11 @@
 
     <!--String Dictionary-->
 
-    <sys:String x:Key="OK">
-        OK
-    </sys:String>
-    <sys:String x:Key="Cancel">
-        Cancel
-    </sys:String>
-    <sys:String x:Key="Refuse">
-        Refuse
-    </sys:String>
-    <sys:String x:Key="DonateBtn">
-        Thanks developer and donate a dinner
-    </sys:String>
+    <sys:String x:Key="OK">OK</sys:String>
+    <sys:String x:Key="Cancel">Cancel</sys:String>
+    <sys:String x:Key="Refuse">Refuse</sys:String>
+    <!-- 捐赠按钮 -->
+    <sys:String x:Key="DonateBtn">Thanks developer and donate a dinner</sys:String>
     <sys:String x:Key="Exit">
         Exit
     </sys:String>

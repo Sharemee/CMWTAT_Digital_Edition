@@ -18,26 +18,35 @@ namespace CMWTAT_DIGITAL
         /// Application Entry Point.
         /// </summary>
         [STAThread()]
-        [DebuggerNonUserCode()]
+        //[DebuggerNonUserCode()]
         [GeneratedCode("PresentationBuildTasks", "4.0.0.0")]
         public static void Main(string[] startup_args)
         {
             //添加程序集解析事件
             var loadedAssemblies = new Dictionary<string, Assembly>();
+            var notExistAssemblies = new HashSet<string>();
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
             {
-                string resourceName = $"CMWTAT_DIGITAL.Res.{new AssemblyName(args.Name).Name}.dll";
+                AssemblyName assemblyName = new AssemblyName(args.Name);
+                string resourceName = $"CMWTAT_DIGITAL.Res.{assemblyName.Name}.dll";
 
-                //Must return the EXACT same assembly, do not reload from a new stream
+                // Must return the EXACT same assembly, do not reload from a new stream
+                // 必须返回完全相同的程序集，不要从新流重新加载
                 if (loadedAssemblies.TryGetValue(resourceName, out Assembly loadedAssembly))
                 {
                     return loadedAssembly;
                 }
-
-                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+                if (notExistAssemblies.Contains(resourceName))
                 {
-                    if (stream == null)
+                    return null;
+                }
+
+                Assembly executingAssembly = Assembly.GetExecutingAssembly();
+                using (var stream = executingAssembly.GetManifestResourceStream(resourceName))
+                {
+                    if(stream is null)
                     {
+                        notExistAssemblies.Add(resourceName);
                         return null;
                     }
                     byte[] bytes = new byte[stream.Length];

@@ -17,7 +17,7 @@
         TextOptions.TextRenderingMode="Aliased"
         Background="{DynamicResource MaterialDesignPaper}"
         ResizeMode="NoResize"
-        Icon="CMWTAT.ico"
+        Icon="pack://application:,,,/CMWTAT_DIGITAL;Component/Resources/img/CMWTAT.ico"
         FontFamily="{DynamicResource Font}"
         WindowStartupLocation="CenterScreen"
         Activated="Window_Activated"

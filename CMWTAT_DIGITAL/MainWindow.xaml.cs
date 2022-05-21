@@ -5,15 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using OSVersionInfoClass;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
@@ -25,20 +17,23 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.Reflection;
 using MaterialDesignThemes.Wpf;
+using Windows.UI.ViewManagement;
+using System.Drawing;
 
 namespace CMWTAT_DIGITAL
 {
-
-    static class Constants
-    {
-        public const string DefaultLang = "en"; // 缺省语言
-    }
-
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// 为调用线程启用或禁用文件系统重定向。
+        /// </summary>
+        /// <param name="Wow64FsEnableRedirection">
+        /// 指示 WOW64 系统文件夹重定向请求的类型。如果为 TRUE，则启用请求重定向;如果为 FALSE，则禁用请求重定向。
+        /// </param>
+        /// <returns>指示函数是否成功的布尔值。如果为 TRUE，则函数成功;如果为 FALSE，则函数失败。</returns>
         [DllImport("Kernel32.dll")]
         private static extern bool Wow64EnableWow64FsRedirection(bool Wow64FsEnableRedirection);//重定向
 
@@ -84,7 +79,7 @@ namespace CMWTAT_DIGITAL
             fs.Close();
         }
 
-        string tempfile = System.IO.Path.GetTempPath() + @"CMWTAT_DIGITAL\";
+        string tempfile = Path.GetTempPath() + @"CMWTAT_DIGITAL\";
 
         public void DelectTempFile()
         {
@@ -253,7 +248,7 @@ namespace CMWTAT_DIGITAL
 
             ConsoleLog("AppDescription: " + description.Description);
             ConsoleLog("AppCopyright: " + copyright.Copyright);
-            ConsoleLog("AppProductVersion: " + System.Windows.Forms.Application.ProductVersion);
+            ConsoleLog("AppProductVersion: " + ProductVersion);
         }
 
         //static bool autoact = false;
@@ -273,9 +268,9 @@ namespace CMWTAT_DIGITAL
 
         public void CheckWindowsTheme()
         {
-            var uiSettings = new Windows.UI.ViewManagement.UISettings();
-            Windows.UI.Color Wcolor = uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background);
-            System.Drawing.Color Scolor = System.Drawing.Color.FromArgb(Wcolor.R, Wcolor.G, Wcolor.B);
+            var uiSettings = new UISettings();
+            Windows.UI.Color Wcolor = uiSettings.GetColorValue(UIColorType.Background);
+            Color Scolor = Color.FromArgb(Wcolor.R, Wcolor.G, Wcolor.B);
             float hue = Scolor.GetHue(); // 色调
             float saturation = Scolor.GetSaturation(); // 饱和度
             float lightness = Scolor.GetBrightness(); // 亮度
@@ -291,9 +286,9 @@ namespace CMWTAT_DIGITAL
                 WindowsTheme = "Dark";
             }
 
-            //ConsoleLog("Windows Theme Background is: " + Wcolor);
-            //ConsoleLog("Windows Theme Brightness is: " + lightness);
-            //ConsoleLog("Windows Theme Mode is: " + WindowsTheme);
+            ConsoleLog("Windows Theme Background is: " + Wcolor);
+            ConsoleLog("Windows Theme Brightness is: " + lightness);
+            ConsoleLog("Windows Theme Mode is: " + WindowsTheme);
         }
 
         public MainWindow()
@@ -448,7 +443,7 @@ namespace CMWTAT_DIGITAL
             {
                 string check_update_json = GetHttpWebRequest("https://cmwtat.cloudmoe.com/api/check_update?version=" + ProductVersion);
                 JObject check_update_jsonobj = JObject.Parse(check_update_json);
-                List<Frequency> check_update_list = new List<Frequency>();
+                //List<Frequency> check_update_list = new List<Frequency>();
                 JValue latest_version = (JValue)check_update_jsonobj["latest"];
                 JValue oldest_version = (JValue)check_update_jsonobj["oldest"];
                 //System.Windows.MessageBox.Show(latest_version.ToString());
